@@ -13,7 +13,7 @@ export const FeedbackProvider = ({ children }) => {
 
     const fetchFeedbacks = async () => {
         const response = await fetch(
-            `${process.env.REACT_APP_BASE_URL}/feedbacks`
+            `${process.env.REACT_APP_BASE_URL}/api/v1/feedbacks`
         );
         const data = await response.json();
         setFeedbacks(data);
@@ -22,16 +22,19 @@ export const FeedbackProvider = ({ children }) => {
 
     const deleteFeedback = async (id) => {
         if (window.confirm("Are you sure you want to delete?")) {
-            await fetch(`${process.env.REACT_APP_BASE_URL}/feedbacks/${id}`, {
-                method: "DELETE",
-            });
+            await fetch(
+                `${process.env.REACT_APP_BASE_URL}/api/v1/feedbacks/${id}`,
+                {
+                    method: "DELETE",
+                }
+            );
             setFeedbacks(feedbacks.filter((fb) => fb.id !== id));
         }
     };
 
     const addFeedback = async (feedback) => {
         const response = await fetch(
-            `${process.env.REACT_APP_BASE_URL}/feedbacks`,
+            `${process.env.REACT_APP_BASE_URL}/api/v1/feedbacks`,
             {
                 headers: {
                     "Content-Type": "Application/json",
@@ -47,7 +50,7 @@ export const FeedbackProvider = ({ children }) => {
 
     const updateFeedback = async (id, feedback) => {
         const response = await fetch(
-            `${process.env.REACT_APP_BASE_URL}/feedbacks/${id}`,
+            `${process.env.REACT_APP_BASE_URL}/feedbacks/api/v1/${id}`,
             {
                 headers: {
                     "Content-Type": "Application/json",
