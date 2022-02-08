@@ -44,7 +44,7 @@ const FeedbackForm = () => {
       };
 
       if (feedbackEdit.edit) {
-        updateFeedback(feedbackEdit.feedback.id, newFeedback);
+        updateFeedback(feedbackEdit.feedback._id, newFeedback);
         editFeedback(feedbackEdit.feedback, false);
       } else {
         addFeedback(newFeedback);

@@ -11,14 +11,7 @@ export const FeedbackProvider = ({ children }) => {
         edit: false,
     });
 
-    const fetchFeedbacks = async () => {
-        const response = await fetch(
-            `${process.env.REACT_APP_BASE_URL}/api/v1/feedbacks`
-        );
-        const data = await response.json();
-        setFeedbacks(data);
-        setIsLoading(false);
-    };
+    
 
     const deleteFeedback = async (id) => {
         if (window.confirm("Are you sure you want to delete?")) {
@@ -28,7 +21,8 @@ export const FeedbackProvider = ({ children }) => {
                     method: "DELETE",
                 }
             );
-            setFeedbacks(feedbacks.filter((fb) => fb.id !== id));
+            const data = feedbacks.filter((fb) => fb._id !== id);
+            setFeedbacks(data);
         }
     };
 
@@ -50,7 +44,7 @@ export const FeedbackProvider = ({ children }) => {
 
     const updateFeedback = async (id, feedback) => {
         const response = await fetch(
-            `${process.env.REACT_APP_BASE_URL}/feedbacks/api/v1/${id}`,
+            `${process.env.REACT_APP_BASE_URL}/api/v1/feedbacks/${id}`,
             {
                 headers: {
                     "Content-Type": "Application/json",
@@ -62,8 +56,17 @@ export const FeedbackProvider = ({ children }) => {
 
         const data = await response.json();
         setFeedbacks(
-            feedbacks.map((fb) => (fb.id === id ? { ...fb, ...data } : fb))
+            feedbacks.map((fb) => fb._id === id ? { ...fb, ...data } : fb)
         );
+    };
+
+    const fetchFeedbacks = async () => {
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/v1/feedbacks`
+        );
+        const data = await response.json();
+        setFeedbacks(data);
+        setIsLoading(false);
     };
 
     useEffect(() => {
